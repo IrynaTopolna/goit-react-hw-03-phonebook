@@ -15,17 +15,25 @@ const formSchema = Yup.object().shape({
   number: Yup.string()
     .matches(
       phoneCheck,
-      'Phone number must be digits. Can contain spaces, dashes and start with +'
+      'Phone number must be min 4 digits. Can contain spaces, dashes and start with +'
     )
     .required('Phone number is required'),
 });
 
-const PhoneBookForm = ({ onSubmit }) => {
+const PhoneBookForm = ({ onSubmit, contacts }) => {
   const handleSubmit = (values, { resetForm }) => {
-    resetForm();
+    const haveName = contacts.find(
+      contact => contact.name.toLowerCase() === values.name.toLowerCase()
+    );
+    if (haveName) {
+      alert(`${values.name} is already in the contact list`);
+      return;
+    }
+
     onSubmit({
       ...values,
     });
+    resetForm();
   };
 
   const initialValues = {

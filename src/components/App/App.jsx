@@ -46,15 +46,6 @@ class App extends Component {
   };
 
   addContact = values => {
-    const contacts = this.state.contacts;
-    const haveName = contacts.find(
-      contact => contact.name.toLowerCase() === values.name.toLowerCase()
-    );
-    if (haveName) {
-      alert(`${values.name} is already in the contact list`);
-      return;
-    }
-
     const newContact = {
       id: nanoid(),
       name: values.name,
@@ -86,7 +77,7 @@ class App extends Component {
     return (
       <Layout>
         <Title>My phonebook</Title>
-        <PhoneBookForm onSubmit={this.addContact} />
+        <PhoneBookForm onSubmit={this.addContact} contacts={data.contacts} />
 
         <Title2>My contacts</Title2>
         <Filter onFilter={this.getFilteredName} value={data.filter} />
